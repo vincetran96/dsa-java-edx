@@ -7,10 +7,6 @@ public class ArrayListTest<T extends Object> {
     public static final int DEFAULT_CAPACITY = 9;
 
     // Constructors
-    public ArrayListTest() {
-        this(DEFAULT_CAPACITY);
-    }
-
     /**
      * Creates the object
      * 
@@ -19,6 +15,9 @@ public class ArrayListTest<T extends Object> {
     public ArrayListTest(int capacity) {
         this.size = 0;
         this.backingArray = (T[]) new Object[capacity];
+    }
+    public ArrayListTest() {
+        this(DEFAULT_CAPACITY);
     }
 
     // Getters
@@ -152,8 +151,8 @@ public class ArrayListTest<T extends Object> {
         for (int i = 0; i < arrayList.getCapacity(); i++) {
             System.out.println(arrayList.get(i));
         }
-        arrayList.addToFront(1);
-        arrayList.addToFront(5);
+        arrayList.addToBack(1);
+        arrayList.addToBack(5);
         arrayList.removeFromBack();
         System.out.println("Size: " + arrayList.getSize());
         System.out.println("Capacity: " + arrayList.getCapacity());
