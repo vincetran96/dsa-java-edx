@@ -5,16 +5,17 @@ public class ArrayListTest<T extends Object> {
 
     // Static vars
     public static final int DEFAULT_CAPACITY = 9;
-    
+
     // Constructors
     public ArrayListTest() {
         this(DEFAULT_CAPACITY);
     }
-    
+
     /**
-        * Creates the object
-        * @param capacity : an integer
-    */
+     * Creates the object
+     * 
+     * @param capacity : an integer
+     */
     public ArrayListTest(int capacity) {
         this.size = 0;
         this.backingArray = (T[]) new Object[capacity];
@@ -33,10 +34,9 @@ public class ArrayListTest<T extends Object> {
         return this.backingArray[index];
     }
 
-    // Grow
     /**
-        * Grows double the capacity
-    */
+     * Grows double the capacity
+     */
     private void grow() {
         System.out.println("Growing...");
         T[] oldBackingArray = this.backingArray;
@@ -46,38 +46,118 @@ public class ArrayListTest<T extends Object> {
         }
     }
 
-    // Add methods
     /**
-        * Adds stuff to front
-        * @param data : object of type T
-    */
+     * Adds stuff to front
+     * 
+     * @param data : object of type T
+     */
     public void addToFront(T data) {
+        // Check size first
         if (this.getSize() == this.getCapacity()) {
             this.grow();
         }
+        // Shift values of elements backwards
         for (int i = this.getSize(); i >= 1; i--) {
-            this.backingArray[i] = this.backingArray[i-1];
+            this.backingArray[i] = this.backingArray[i - 1];
         }
         this.backingArray[0] = data;
         this.size++;
     }
 
+    /**
+     * Adds stuff to back
+     * 
+     * @param data : object of type T
+     */
+    public void addToBack(T data) {
+        // Check size first
+        if (this.getSize() == this.getCapacity()) {
+            this.grow();
+        }
+        this.backingArray[this.getSize()] = data;
+        this.size++;
+    }
+
+    /**
+     * Removes stuff at front
+     * 
+     * @param args
+     */
+    public T removeFromFront() {
+        T front_value = this.backingArray[0];
+
+        // Shift values of elements forwards
+        for (int i = 0; i < this.getSize(); i++) {
+            this.backingArray[i] = this.backingArray[i + 1];
+        }
+        this.size--;
+
+        return front_value;
+    }
+
+    /**
+     * Removes stuff at back
+     * 
+     * @param args
+     */
+    public T removeFromBack() {
+        T back_value = this.backingArray[this.getSize()-1];
+
+        this.backingArray[this.getSize()-1] = null;
+        this.size--;
+
+        return back_value;
+    }
+
     // Main
     public static void main(String[] args) {
         ArrayListTest<Integer> arrayList = new ArrayListTest<Integer>(3);
-        System.out.println("Size: " + arrayList.getSize());
-        System.out.println("Capacity: " + arrayList.getCapacity());
+
+        // Add
+        System.out.println("Initial size: " + arrayList.getSize());
+        System.out.println("Initial capacity: " + arrayList.getCapacity());
         arrayList.addToFront(1);
-        System.out.println("Size: " + arrayList.getSize());
-        System.out.println("Capacity: " + arrayList.getCapacity());
         arrayList.addToFront(5);
         arrayList.addToFront(6);
-        System.out.println("Size: " + arrayList.getSize());
-        System.out.println("Capacity: " + arrayList.getCapacity());
         arrayList.addToFront(8);
+        arrayList.addToBack(12);
         System.out.println("Size: " + arrayList.getSize());
         System.out.println("Capacity: " + arrayList.getCapacity());
-        System.out.println("Printing elements:");
+        System.out.println("Printing elements after adding:");
+        for (int i = 0; i < arrayList.getSize(); i++) {
+            System.out.println(arrayList.get(i));
+        }
+        System.out.println();
+
+        // Remove
+        Integer front0 = arrayList.removeFromFront();
+        System.out.println("Size: " + arrayList.getSize());
+        System.out.println("Capacity: " + arrayList.getCapacity());
+        System.out.println("Printing elements after removing:");
+        for (int i = 0; i < arrayList.getSize(); i++) {
+            System.out.println(arrayList.get(i));
+        }
+        System.out.println("Printing ALL elements after removing:");
+        for (int i = 0; i < arrayList.getCapacity(); i++) {
+            System.out.println(arrayList.get(i));
+        }
+        int currentSize = arrayList.getSize();
+        for (int i = 0; i < currentSize; i++) {
+            arrayList.removeFromFront();
+        }
+        System.out.println("Size: " + arrayList.getSize());
+        System.out.println("Capacity: " + arrayList.getCapacity());
+        System.out.println(
+                "Printing ALL elements after removing all remaining elements:");
+        for (int i = 0; i < arrayList.getCapacity(); i++) {
+            System.out.println(arrayList.get(i));
+        }
+        arrayList.addToFront(1);
+        arrayList.addToFront(5);
+        arrayList.removeFromBack();
+        System.out.println("Size: " + arrayList.getSize());
+        System.out.println("Capacity: " + arrayList.getCapacity());
+        System.out.println("Printing elements after removing:");
         for (int i = 0; i < arrayList.getSize(); i++) {
             System.out.println(arrayList.get(i));
         }

@@ -1,3 +1,6 @@
+/**
+ * Finds greatest common denominator
+ */
 public class GCD {
     public static int gcd(int x, int y) {
         // Base case
