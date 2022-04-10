@@ -1,18 +1,18 @@
-public class SinglyLinkedListTest {
+public class SinglyLinkedListTest<T> {
     // Instance vars
     private Node head;
 
     // Add methods
-    public void addToFront(int data) {
+    public void addToFront(T data) {
         // Create new node; Change its next; Change this.head
-        Node newNode = Node(data);
+        Node<T> newNode = new Node(data);
         newNode.next = this.head;
         this.head = newNode;
     }
 
-    public void addToBack(int data) {
+    public void addToBack(T data) {
         // Create new node; consider 2 cases
-        Node newNode = Node(data);
+        Node<T> newNode = new Node(data);
 
         if (this.head == null) {
             this.head = newNode;
@@ -25,6 +25,34 @@ public class SinglyLinkedListTest {
                 currentNode = currentNode.next;
             }
             currentNode.next = newNode;
+        }
+    }
+
+    // Remove methods
+    /**
+     * Checks if head is null first
+     */
+    public void removeFromFront() {
+        if (this.head != null) {
+            this.head = this.head.next;
+        }
+    }
+
+    /**
+     * Only traverse to the *penultimate* element
+     */
+    public void removeFromBack() {
+        if (this.head != null) {
+            if (this.head.next == null) {
+                this.head = null;
+            }
+            else {
+                Node currentNode = this.head;
+                while (currentNode.next.next != null) {
+                    currentNode = currentNode.next;
+                }
+                currentNode.next = null;
+            }
         }
     }
 
@@ -42,16 +70,19 @@ public class SinglyLinkedListTest {
         return return_string;
     }
     
-    private static class Node {
-        private int data;
+    /**
+     * Generic container for type T
+     */
+    private static class Node<T> {
+        private T data;
         private Node next;
 
         // Constructor
-        private Node(int data, Node next) {
+        private Node(T data, Node next) {
             this.data = data;
             this.next = next;
         }
-        private Node(int data) {
+        private Node(T data) {
             this(data, null);
         }
 
