@@ -9,7 +9,6 @@ public class ArrayListTest<T extends Object> {
     // Constructors
     /**
      * Creates the object
-     * 
      * @param capacity : an integer
      */
     public ArrayListTest(int capacity) {
@@ -47,7 +46,6 @@ public class ArrayListTest<T extends Object> {
 
     /**
      * Adds stuff to front
-     * 
      * @param data : object of type T
      */
     public void addToFront(T data) {
@@ -65,7 +63,6 @@ public class ArrayListTest<T extends Object> {
 
     /**
      * Adds stuff to back
-     * 
      * @param data : object of type T
      */
     public void addToBack(T data) {
@@ -78,34 +75,42 @@ public class ArrayListTest<T extends Object> {
     }
 
     /**
-     * Removes stuff at front
-     * 
-     * @param args
+     * Removes stuff at front;
+     * Checks for 2 cases: when array is empty and when not
      */
     public T removeFromFront() {
-        T front_value = this.backingArray[0];
-
-        // Shift values of elements forwards
-        for (int i = 0; i < this.getSize(); i++) {
-            this.backingArray[i] = this.backingArray[i + 1];
+        if (this.getSize() == 0 ) {
+            throw new IndexOutOfBoundsException("Nope");
         }
-        this.size--;
+        else {
+            T front_value = this.backingArray[0];
 
-        return front_value;
+            // Shift values of elements forwards
+            for (int i = 0; i < this.getSize(); i++) {
+                this.backingArray[i] = this.backingArray[i + 1];
+            }
+            this.size--;
+
+            return front_value;
+        }
     }
 
     /**
-     * Removes stuff at back
-     * 
-     * @param args
+     * Removes stuff at back;
+     * Checks for 2 cases: when array is empty and when not
      */
     public T removeFromBack() {
-        T back_value = this.backingArray[this.getSize()-1];
+        if (this.getSize() == 0 ) {
+            throw new IndexOutOfBoundsException("Nope");
+        }
+        else {
+            T back_value = this.backingArray[this.getSize()-1];
 
-        this.backingArray[this.getSize()-1] = null;
-        this.size--;
+            this.backingArray[this.getSize()-1] = null;
+            this.size--;
 
-        return back_value;
+            return back_value;
+        }
     }
 
     // Main
@@ -151,6 +156,21 @@ public class ArrayListTest<T extends Object> {
         for (int i = 0; i < arrayList.getCapacity(); i++) {
             System.out.println(arrayList.get(i));
         }
+        
+        // Test removing empty array
+        try {
+            arrayList.removeFromFront();
+        }
+        catch (IndexOutOfBoundsException exc) {
+            System.out.println("Exception caught: " + exc.getMessage());
+        }
+        try {
+            arrayList.removeFromBack();
+        }
+        catch (IndexOutOfBoundsException exc) {
+            System.out.println("Exception caught: " + exc.getMessage());
+        }
+
         arrayList.addToBack(1);
         arrayList.addToBack(5);
         arrayList.removeFromBack();

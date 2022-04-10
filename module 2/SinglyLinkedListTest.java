@@ -13,7 +13,7 @@ public class SinglyLinkedListTest {
     public void addToBack(int data) {
         // Create new node; consider 2 cases
         Node newNode = Node(data);
-        
+
         if (this.head == null) {
             this.head = newNode;
         }
@@ -57,7 +57,7 @@ public class SinglyLinkedListTest {
 
         // To string method
         public String toString() {
-            return Integer.toString();
+            return Integer.toString(data);
         }
     }
 }
