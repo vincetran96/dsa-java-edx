@@ -1,30 +1,35 @@
 public class SinglyLinkedListTest<T> {
     // Instance vars
-    private Node head;
+    private Node<T> head;
+
+    // Constructor
+    public SinglyLinkedListTest() {
+        this.head = null;
+    }
 
     // Add methods
     public void addToFront(T data) {
         // Create new node; Change its next; Change this.head
-        Node<T> newNode = new Node(data);
+        Node<T> newNode = new Node<T>(data);
         newNode.next = this.head;
         this.head = newNode;
     }
 
     public void addToBack(T data) {
         // Create new node; consider 2 cases
-        Node<T> newNode = new Node(data);
+        Node<T> newNode = new Node<T>(data);
 
         if (this.head == null) {
             this.head = newNode;
         }
         else {
-            Node currentNode = this.head;
+            Node<T> currentNode = this.head;
 
             // Traverse thru the list
-            while (currentNode.next != null) {
-                currentNode = currentNode.next;
+            while (currentNode.getNext() != null) {
+                currentNode = currentNode.getNext();
             }
-            currentNode.next = newNode;
+            currentNode.setNext(newNode);
         }
     }
 
@@ -34,7 +39,7 @@ public class SinglyLinkedListTest<T> {
      */
     public void removeFromFront() {
         if (this.head != null) {
-            this.head = this.head.next;
+            this.head = this.head.getNext();
         }
     }
 
@@ -47,11 +52,11 @@ public class SinglyLinkedListTest<T> {
                 this.head = null;
             }
             else {
-                Node currentNode = this.head;
-                while (currentNode.next.next != null) {
-                    currentNode = currentNode.next;
+                Node<T> currentNode = this.head;
+                while (currentNode.getNext().getNext() != null) {
+                    currentNode = currentNode.getNext();
                 }
-                currentNode.next = null;
+                currentNode.setNext(null);
             }
         }
     }
@@ -59,12 +64,12 @@ public class SinglyLinkedListTest<T> {
     // To string method
     public String toString() {
         String return_string = "";
-        Node currentNode = this.head;
+        Node<T> currentNode = this.head;
 
         // Traverse thru the list
         while (currentNode != null) {
             return_string += currentNode.toString() + " ";
-            currentNode = currentNode.next;
+            currentNode = currentNode.getNext();
         }
 
         return return_string;
@@ -75,20 +80,29 @@ public class SinglyLinkedListTest<T> {
      */
     private static class Node<T> {
         private T data;
-        private Node next;
+        private Node<T> next;
 
         // Constructor
-        private Node(T data, Node next) {
+        private Node(T data, Node<T> next) {
             this.data = data;
             this.next = next;
         }
         private Node(T data) {
             this(data, null);
         }
+        
+        // Getters and setters
+        private Node<T> getNext() {
+            return this.next;
+        }
+
+        private void setNext(Node<T> node) {
+            this.next = node;
+        }
 
         // To string method
         public String toString() {
-            return Integer.toString(data);
+            return this.data.toString();
         }
     }
 }
